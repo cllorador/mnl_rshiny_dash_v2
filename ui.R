@@ -1,10 +1,67 @@
 source("/Users/ltayona/Downloads/mnl_rshiny_dash_v2-master/mnl_data_preparation_v2.R")
 
+
+
+##### PRIMARY COLORS
+# Black - #000000
+# White - #FFFFFF
+# Blue - #276EF1
+
+
+##### SECONDARY COLORS
+# Green - #47B275
+# Red - #F25138
+# Orange - #FF7D49
+# Yellow - #FFC043
+# Brown - #99644C
+# Purple - #7356BF
+
+
+##### GRAPHS AND CHARTS COLORS
+
+# Safety Blue -#276EF1
+# Blue tint#1 - #5593FC
+# Blue tint#2 - #73A6FC
+
+# Dark Gray - #263139
+# Uber Green - #47B275
+# Green tint#1 - #BEE4C2
+
+# Uber Purple - #7356BF
+# Purple tint#1 - #A89ECB
+
+
+##### SHADES OF GREY (darkest to lightest)
+
+# Grey1 - #263139
+# Grey2 - #4E5$5B
+# Grey3 - #77797A
+# Grey4 - #AFAFAF
+# Grey5 - #CBCBCB
+# Grey6 - #E2E2E2
+# Grey7 - #EEEEEE
+# Grey8 - #F6F6F6
+
+# More here > https://docs.google.com/presentation/d/1XYIFYqV05dtKosI60qiZXIgeVZlLjn1huLqHL1KJLsk/edit#slide=id.g3f94ba7203_6_438
+#           >  https://docs.google.com/presentation/d/18iphl5KeLK_YEjViVxQZlcHxqKGI8bD3TnIUtq-uWF4/edit#slide=id.g420324a732_816_0
+
+
+
+
+
+
+ui <- dashboardPage(
+  
+  # Skin Color
+  #skin = "black",
+  title = "Manila Lighthouse",
+
 ui <- dashboardPage(
   
   # Skin Color
   skin = "blue",
   title = "COE-UBR-MNL METRICS",
+
   
   # Dashboard Header
   dashboardHeader( title = tags$a( tags$head(tags$style(HTML(".name { color: white }"))),
@@ -811,7 +868,11 @@ ui <- dashboardPage(
                                     box(width = 12, title = "Resolution Efficiency", status="primary",solidHeader = TRUE, DT::dataTableOutput("Reseff_table"), collapsible = T, collapsed = F))
               ))),
       tabItem(tabName="Solved",
+
+        
+
               h2("Solves"),
+
               fluidRow(box(width = 12,
                            #fluidRow(box(width = 12, title = "Conditions", status="primary" ,solidHeader = TRUE,collapsible = TRUE,collapsed = FALSE,
                            
