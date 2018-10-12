@@ -30,7 +30,7 @@ server <- function(input, output, session) {
         style = list(
           color = '#000000',
           fontFamily = "Helvetica",
-          font = 'bold 12px'
+          font = 'bold 12px',
 
       colors = c("#0074D9","#047878","#FFB733","#F57336","#7E827A"),
       
@@ -40,7 +40,7 @@ server <- function(input, output, session) {
       ),
       title = list(
         style = list(
-          color = '#FFFFFF',
+          color = '#000000',
           fontFamily = "Helvetica"
 
         )
@@ -50,7 +50,7 @@ server <- function(input, output, session) {
           color = '#666666',
 
           fontFamily = "Helvetica",
-          font = 'bold 12px'
+          font = 'bold 12px',
 
           fontFamily = "Helvetica"
 
@@ -66,7 +66,7 @@ server <- function(input, output, session) {
           
       
 
-          color = '#FFFFFF'
+          color = '#000000'
         ),
         
 
@@ -90,7 +90,7 @@ server <- function(input, output, session) {
       )
       
       )
-  )
+  ))
 
   
   options(highcharter.theme = newtheme) #setting theme as default
@@ -991,13 +991,14 @@ server <- function(input, output, session) {
     if(input$APH_inside_filter=="All" & input$APH_level_filter_type=="LOB"){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
-        hc_title(text = "Weekly APH") %>%
-        hc_yAxis(title = list(text = "APH")) %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH")) %>%
         hc_tooltip(crosshairs = T, shared = T) %>%
         hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
         hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
-        hc_add_series(APH_table(), "line", hcaes(x = Week , y = Actual_APH, group = LOB))}
-    else if(length(input$APH_inside_filter)==1){
+        hc_add_series(APH_table(), "line", hcaes(x = Week , y = Actual_TPH, group = LOB))}
+    
+    else if(input$APH_level_filter_type=="TL" & length(input$APH_inside_filter)==1){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
         hc_title(text = "Weekly APH") %>%
@@ -1008,7 +1009,7 @@ server <- function(input, output, session) {
         hc_add_series(APH_table(), "line",name="Actual", hcaes(x = Week , y = Actual_APH)) %>%
         hc_add_series(APH_table(), "line",name="Target", hcaes(x = Week , y = Target_APH))} 
     
-    else if(input$APH_level_filter_type=="LOB"){
+    else if(input$APH_level_filter_type=="CSR" & length(input$APH_inside_filter)==1){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
         hc_title(text = "Weekly APH") %>%
@@ -1016,7 +1017,29 @@ server <- function(input, output, session) {
         hc_tooltip(crosshairs = T, shared = T) %>%
         hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
         hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
-        hc_add_series(APH_table(), "line", hcaes(x = Week , y = Actual_APH, group= LOB))}
+        hc_add_series(APH_table(), "line",name="Actual", hcaes(x = Week , y = Actual_APH)) %>%
+        hc_add_series(APH_table(), "line",name="Target", hcaes(x = Week , y = Target_APH))} 
+    
+    else if(length(input$APH_inside_filter)==1){
+      highchart() %>%
+        hc_chart(zoomType = "x") %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH"),min=0) %>%
+        hc_tooltip(crosshairs = T, shared = T) %>%
+        hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
+        hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
+        hc_add_series(APH_table(), "line",name="Actual", hcaes(x = Week , y = Actual_TPH)) %>%
+        hc_add_series(APH_table(), "line",name="Target", hcaes(x = Week , y = Target_TPH))} 
+    
+    else if(input$APH_level_filter_type=="LOB"){
+      highchart() %>%
+        hc_chart(zoomType = "x") %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH"),min=0) %>%
+        hc_tooltip(crosshairs = T, shared = T) %>%
+        hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
+        hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
+        hc_add_series(APH_table(), "line", hcaes(x = Week , y = Actual_TPH, group= LOB))}
     else if(input$APH_level_filter_type=="TL"){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
@@ -1026,6 +1049,7 @@ server <- function(input, output, session) {
         hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
         hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
         hc_add_series(APH_table(), "line", hcaes(x = Week , y = Actual_APH, group= TL))}
+    
     else if(input$APH_level_filter_type=="CSR"){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
@@ -1558,13 +1582,14 @@ server <- function(input, output, session) {
     if(input$Overview_inside_filter=="All" & input$Overview_level_filter_type=="LOB"){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
-        hc_title(text = "Weekly APH") %>%
-        hc_yAxis(title = list(text = "APH")) %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH")) %>%
         hc_tooltip(crosshairs = T, shared = T) %>%
         hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
         hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
-        hc_add_series(Overview_table(), "line", hcaes(x = Week , y = Actual_APH, group = LOB))}
-    else if(length(input$Overview_inside_filter)==1){
+        hc_add_series(Overview_table(), "line", hcaes(x = Week , y = Actual_TPH, group = LOB))}
+    
+    else if(input$Overview_level_filter_type=="TL" & length(input$Overview_inside_filter)==1){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
         hc_title(text = "Weekly APH") %>%
@@ -1575,7 +1600,7 @@ server <- function(input, output, session) {
         hc_add_series(Overview_table(), "line",name="Actual", hcaes(x = Week , y = Actual_APH)) %>%
         hc_add_series(Overview_table(), "line",name="Target", hcaes(x = Week , y = Target_APH))} 
     
-    else if(input$Overview_level_filter_type=="LOB"){
+    else if(input$Overview_level_filter_type=="CSR" & length(input$Overview_inside_filter)==1){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
         hc_title(text = "Weekly APH") %>%
@@ -1583,7 +1608,29 @@ server <- function(input, output, session) {
         hc_tooltip(crosshairs = T, shared = T) %>%
         hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
         hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
-        hc_add_series(Overview_table(), "line", hcaes(x = Week , y = Actual_APH, group= LOB))}
+        hc_add_series(Overview_table(), "line",name="Actual", hcaes(x = Week , y = Actual_APH)) %>%
+        hc_add_series(Overview_table(), "line",name="Target", hcaes(x = Week , y = Target_APH))} 
+    
+    else if(length(input$Overview_inside_filter)==1){
+      highchart() %>%
+        hc_chart(zoomType = "x") %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH"),min=0) %>%
+        hc_tooltip(crosshairs = T, shared = T) %>%
+        hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
+        hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
+        hc_add_series(Overview_table(), "line",name="Actual", hcaes(x = Week , y = Actual_TPH)) %>%
+        hc_add_series(Overview_table(), "line",name="Target", hcaes(x = Week , y = Target_TPH))} 
+    
+    else if(input$Overview_level_filter_type=="LOB"){
+      highchart() %>%
+        hc_chart(zoomType = "x") %>%
+        hc_title(text = "Weekly TPH") %>%
+        hc_yAxis(title = list(text = "TPH"),min=0) %>%
+        hc_tooltip(crosshairs = T, shared = T) %>%
+        hc_subtitle(text = list('Highlight along the x-axis to zoom; Click Legends to enable/disable')) %>%
+        hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%e of %b')) %>%
+        hc_add_series(Overview_table(), "line", hcaes(x = Week , y = Actual_TPH, group= LOB))}
     else if(input$Overview_level_filter_type=="TL"){
       highchart() %>%
         hc_chart(zoomType = "x") %>%
